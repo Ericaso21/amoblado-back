@@ -1,0 +1,21 @@
+version: '3'
+services: 
+  #base de datos
+  database:
+    image: mysql:latest
+    container_name: database-app-sena
+    command: mysqld --character-set-filesystem=utf8 --character-set-server=utf8 --collation-server=utf8_unicode_ci --init-connect='SET NAMES UTF8;' --innodb-flush-log-at-trx-commit=0 --default-authentication-plugin=mysql_native_password 
+    restart: always
+    environment: 
+      MYSQL_ROOT_PASSWORD: 63a9f0ea7bb98050796b649e85481845
+      MYSQL_DATABASE: app_sena
+    ports: 
+      - 3306:3306
+    volumes: 
+      - ./database/:/docker-entrypoint-initdb.d/
+    networks: 
+      - esnet
+
+networks: 
+  esnet: 
+    driver: bridge
